@@ -3,7 +3,6 @@ package com.is666is.lpl.order.core.util.query;
 import com.is666is.lpl.order.core.util.PageParam;
 import lombok.Data;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 @Data

@@ -27,7 +27,7 @@ class OrderClientTestApplicationTests extends BaseSpringBootApplicationTest {
 	@Test
 	public void findAllByUserId(){
 		List<OrderResult> list = orderClient.findAllByUserId("59bbb4290d49c8016ea18bb6");
-		System.out.println(list.size()+" findAllByUserId++++++++++++++++");
+		System.out.println(list.size()+"   findAllByUserId++++++++++++++++");
 		Assert.assertNotNull(list);
 
 	}
@@ -38,7 +38,7 @@ class OrderClientTestApplicationTests extends BaseSpringBootApplicationTest {
 	@Test
 	public void findByOrderStatus(){
 		Integer status = orderClient.findByOrderStatus("594784290949780165218436");
-		System.out.println(status+"	findByOrderStatus+++++++++++++++++");
+		System.out.println(status+"	     findByOrderStatus+++++++++++++++++");
 		Assert.assertNotNull(status);
 	}
 }
