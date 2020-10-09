@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: order-api
+  config:
+    name: order-api   #配置文件名
+  jmx:
+    default-domain: order-api
+  main:
+    allow-bean-definition-overriding: true  #如果有重复的Bean 后面的Bean覆盖前面的Bean
+
+server:
+  port: ${randomServerPort.value[1000,5000]} #随机端口号
+  servlet:
+    application-display-name: order-api
+    context-path: /
+
+ribbon:
+  eager-load:
+    enabled: true #开启Ribbon的饿加载
+    clients: passport-webapp, jiankang-api, g08-api, common-webapp  #指定需要饿加载 客户端名称 和 服务名
+
+logging:
+  config: classpath:logback.xml #日志文件

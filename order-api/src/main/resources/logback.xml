@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<!-- log home -->
+	<property name="LOG_HOME" value="/home/data/log/family-api" />
+	<!-- log pattern -->
+	<property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS}[%X{X-B3-TraceId:-},%X{X-B3-SpanId:-}] [%thread] %-5level %logger{36}:%line - %msg%n%ex"></property>
+
+	<!-- console.log -->
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<Pattern>%d{HH:mm:ss} [%thread] %highlight(%-5level)
+				%logger{36}:%line - %msg%n%ex</Pattern>
+		</encoder>
+	</appender>
+	<!-- controller.log -->
+	<appender name="controller" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/controller.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>${LOG_HOME}/controller.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<!-- keep 30 days' worth of history -->
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<Pattern>${LOG_PATTERN}</Pattern>
+		</encoder>
+	</appender>
+	<!-- spring.log -->
+	<appender name="spring" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/spring.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>${LOG_HOME}/spring.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<!-- keep 30 days' worth of history -->
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<Pattern>${LOG_PATTERN}</Pattern>
+		</encoder>
+	</appender>
+	<!-- secret.log -->
+	<appender name="secret" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/secret.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>${LOG_HOME}/secret.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<!-- keep 30 days' worth of history -->
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<Pattern>${LOG_PATTERN}</Pattern>
+		</encoder>
+	</appender>
+	<!-- amqp.log -->
+	<appender name="amqp" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/amqp.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>${LOG_HOME}/amqp.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<!-- keep 30 days' worth of history -->
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %msg%n%ex</Pattern>
+		</encoder>
+	</appender>
+
+	<logger name="com.is666is.lpl.order" level="TRACE" additivity="false">
+		<appender-ref ref="controller" />
+	</logger>
+	<logger name="com.eaphone.smarthealth.support.SpringRequestLoggingFilter" level="DEBUG" additivity="false">
+		<appender-ref ref="spring" />
+	</logger>
+	<logger name="com.eaphone.smarthealth.support.SpringRequestLoggingFilter.secret" level="DEBUG" additivity="false">
+		<appender-ref ref="secret" />
+	</logger>
+<!--	<logger name="com.eaphone.jiankang.family.amqp" level="TRACE" additivity="false">
+		<appender-ref ref="amqp" />
+	</logger>-->
+
+	<root level="INFO">
+		<appender-ref ref="console" />
+	</root>
+</configuration>
