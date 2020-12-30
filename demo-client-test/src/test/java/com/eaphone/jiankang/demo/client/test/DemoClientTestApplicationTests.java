@@ -2,7 +2,7 @@ package com.eaphone.jiankang.demo.client.test;
 
 
 import com.eaphone.jiankang.demo.client.DemoClient;
-import com.eaphone.jiankang.demo.client.dto.OrderResult;
+import com.eaphone.jiankang.demo.client.dto.DemoResult;
 import com.eaphone.xxs.test.BaseSpringBootApplicationTest;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
@@ -22,24 +22,24 @@ class DemoClientTestApplicationTests extends BaseSpringBootApplicationTest {
 	private DemoClient demoClient;
 
 	/**
-	 * 获取指定用户的所有订单
+	 * 获取指定用户的所有demo
 	 */
 	@Test
-	public void findAllByUserId(){
-		List<OrderResult> list = demoClient.findAllByUserId("35bbb4562d49c8016ea35bb6");
-		System.out.println(list.size()+"   findAllByUserId++++++++++++++++");
+	public void findUserDemos(){
+		List<DemoResult> list = demoClient.findUserDemos("59bbb4290d49c8016ea18bb4");
+		System.out.println(list.size()+"   findUserDemos++++++++++++++++");
 		list.forEach(System.out::println);
 		Assert.assertNotNull(list);
 
 	}
 
 	/**
-	 * 获取指定订单状态
+	 * 获取指定demo状态
 	 */
 	@Test
-	public void findByOrderStatus(){
-		Integer status = demoClient.findByOrderStatus("594784290949780165218436");
-		System.out.println(status+"	     findByOrderStatus+++++++++++++++++");
+	public void findDemoStatus(){
+		Integer status = demoClient.findDemoStatus("59bbb4290d49c8016ea18bb6");
+		System.out.println(status+"	     findDemoStatus+++++++++++++++++");
 		Assert.assertNotNull(status);
 	}
 }

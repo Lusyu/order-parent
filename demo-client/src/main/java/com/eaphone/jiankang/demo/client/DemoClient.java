@@ -1,6 +1,6 @@
 package com.eaphone.jiankang.demo.client;
 
-import com.eaphone.jiankang.demo.client.dto.OrderResult;
+import com.eaphone.jiankang.demo.client.dto.DemoResult;
 import com.eaphone.jiankang.demo.client.service.DemoService;
 import com.eaphone.smarthealth.client.model.ClientResponse;
 import lombok.NonNull;
@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * 订单 Client
+ * Demo Client
  */
 @Slf4j
 public class DemoClient {
@@ -18,14 +18,14 @@ public class DemoClient {
     private DemoService demoService;
 
      /**
-     * 获取指定用户的所有订单
-     * @param //userId  用户id
-     * @return  用户的所有订单
+     * 获取指定用户的所有demo
+     * @param userId  用户id
+     * @return  指定用户的所有demo
      */
-    public List<OrderResult> findAllByUserId(@NonNull String userId){
-        List<OrderResult> list=Collections.EMPTY_LIST;
+    public List<DemoResult> findUserDemos(@NonNull String userId){
+        List<DemoResult> list=Collections.EMPTY_LIST;
         try {
-            ClientResponse<List<OrderResult>> response = demoService.findAllByUserId(userId);
+            ClientResponse<List<DemoResult>> response = demoService.findUserDemos(userId);
             return  response.getData()!=null&&response.isSuccess()
                                         ? response.getData()
                                         : list;
@@ -36,14 +36,14 @@ public class DemoClient {
     }
 
     /**
-     * 根据指定订单状态
-     * @param orderNumber 订单编号
-     * @return 订单状态
+     * 获取指定demo状态
+     * @param demoId
+     * @return demo状态
      */
-    public Integer findByOrderStatus(@NonNull String orderNumber){
+    public Integer findDemoStatus(@NonNull String demoId){
         Integer status=-1;
         try {
-            ClientResponse<Integer> response = demoService.findByOrderStatus(orderNumber);
+            ClientResponse<Integer> response = demoService.findDemoStatus(demoId);
             return response!=null&&response.isSuccess()?response.getData():status;
         }catch (Exception e){
             log.info("findByOrderStatus",e.getMessage());

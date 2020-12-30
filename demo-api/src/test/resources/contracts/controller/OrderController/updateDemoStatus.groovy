@@ -3,13 +3,13 @@ package contracts.controller.OrderController
 import org.springframework.cloud.contract.spec.Contract
 
 /**
- * 修改指定订单状态
+ * 修改指定demo状态
  *
  */
 Contract.make {
     request {
         method PATCH()
-        url $(c("/demo/[0-9a-z]{24}/status/[0-3]{1}/")
+        url $(c("/demo/[0-9a-z]{24}/status/[0-6]{1}/")
                 , p("/demo/59bbb4290d49c8016ea18bb6/status/1/"))
         headers {
             header('Authorization',

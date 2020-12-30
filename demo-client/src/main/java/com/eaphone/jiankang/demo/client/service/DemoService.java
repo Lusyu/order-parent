@@ -2,7 +2,7 @@ package com.eaphone.jiankang.demo.client.service;
 
 import com.eaphone.jiankang.demo.client.service.fallback.DemoServiceFallBack;
 import com.eaphone.smarthealth.client.model.ClientResponse;
-import com.eaphone.jiankang.demo.client.dto.OrderResult;
+import com.eaphone.jiankang.demo.client.dto.DemoResult;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,18 +15,18 @@ import java.util.List;
 @FeignClient(name = "demo-api",contextId = "demo",path = "/secret/order/",fallback = DemoServiceFallBack.class)
 public interface DemoService {
     /**
-     * 获取指定用户id所有订单
+     * 获取指定用户的所有demo
      * @param userId 用户id
-     * @return  所有订单
+     * @return  demo
      */
-    @GetMapping("/{userId:[0-9a-z]{24}}/")
-    ClientResponse<List<OrderResult>> findAllByUserId(@PathVariable String userId);
+    @GetMapping("/{userId:[0-9a-z]{24}}/demos/")
+    ClientResponse<List<DemoResult>> findUserDemos(@PathVariable String userId);
 
     /**
-     * 获取指定订单状态
-     * @param orderNumber 订单编号
-     * @return 订单状态
+     * 获取指定demo状态
+     * @param demoId
+     * @return 状态
      */
-    @GetMapping("/status/{orderNumber:[0-9a-z]+}/")
-    ClientResponse<Integer> findByOrderStatus(@PathVariable String orderNumber);
+    @GetMapping("/status/{demoId:[0-9a-z]+}/")
+    ClientResponse<Integer> findDemoStatus(@PathVariable String demoId);
 }

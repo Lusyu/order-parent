@@ -13,19 +13,19 @@ import java.util.List;
 public interface DemoRepo extends MongoRepository<Demo, String> {
 
     /**
-     * 获取用户所有订单
+     * 获取指定用户所有demo
      *
-     * @param userId 用户id
-     * @return 用户的所有订单
+     * @param userId
+     * @return
      */
     List<Demo> findAllByUserId(String userId);
 
     /**
-     * 根据指定订单编号获取指定订单
+     * 根据指定demoId获取指定demo
      *
-     * @param orderId 订单编号
-     * @return 订单
+     * @param demoId
+     * @return
      */
-    Demo findFirstByOrderId(String orderId);
+    Demo findFirstByDemoId(String demoId);
 
 }

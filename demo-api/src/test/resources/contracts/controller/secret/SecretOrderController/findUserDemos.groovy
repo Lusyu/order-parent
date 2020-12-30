@@ -4,7 +4,7 @@ import org.springframework.cloud.contract.spec.Contract
 
 
 /**
- * 根据用户id获取订单
+ * 根据用户id获取demo
  */
 Contract.make {
     request {
@@ -16,7 +16,7 @@ Contract.make {
         body(
                 success: $(c(true), p(regex(anyBoolean()))),
                 data: [[
-                               orderId       : $(c("59bbb4290d49c8016ea18bb6"), p(regex("[0-9a-z]{24}"))),
+                               demoId        : $(c("59bbb4290d49c8016ea18bb6"), p(regex("[0-9a-z]{24}"))),
                                userId        : $(c("59bbb4290d49c8016ea18bb4"), p(regex("[0-9a-z]{24}"))),
                                payPrice      : $(c("999"), p(regex(".+"))),
                                shipTime      : $(c("2020-10-01"), p(regex(".+"))),

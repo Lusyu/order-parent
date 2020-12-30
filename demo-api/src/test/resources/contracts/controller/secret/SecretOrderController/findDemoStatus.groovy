@@ -3,7 +3,7 @@ package contracts.controller.secret.SecretOrderController
 import org.springframework.cloud.contract.spec.Contract
 
 /**
- * 获取指定订单状态
+ * 获取指定demo状态
  */
 Contract.make {
     request {

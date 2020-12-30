@@ -3,7 +3,7 @@ package contracts.controller.OrderController
 import org.springframework.cloud.contract.spec.Contract
 
 /**
- * 订单分页
+ * demo分页
  */
 Contract.make {
     request {
@@ -14,7 +14,7 @@ Contract.make {
                 parameter("pageSize", $(c(regex("[0-9]+")), p("2")))
                 parameter("minPayPrice", $(c(regex("[0-9]+")), p("200")))
                 parameter("maxPayPrice", $(c(regex("[0-9]+")), p("2000")))
-                parameter("orderNumber", $(c(regex(".+")), p("59bbb4290d49c8016ea18bb6")))
+                parameter("demoId", $(c(regex(".+")), p("59bbb4290d49c8016ea18bb6")))
                 parameter("status", $(c(regex("[0-3]{1}")), p("1")))
             }
         }
@@ -28,8 +28,8 @@ Contract.make {
                         pageSize   : $(c("4"), p(regex("[0-9]+"))),
                         totalCount : $(c("100"), p(regex("[0-9]+"))),
                         totalPage  : $(c("25"), p(regex("[0-9]+"))),
-                        orders     : [[
-                                              orderId       : $(c("59bbb4290d49c8016ea18bb6"), p(regex("[0-9a-z]{24}"))),
+                        demos      : [[
+                                              demoId        : $(c("59bbb4290d49c8016ea18bb6"), p(regex("[0-9a-z]{24}"))),
                                               userId        : $(c("59bbb4290d49c8016ea18bb4"), p(regex("[0-9a-z]{24}"))),
                                               payPrice      : $(c("999"), p(regex(".+"))),
                                               shipTime      : $(c("2020-10-01"), p(regex(".+"))),

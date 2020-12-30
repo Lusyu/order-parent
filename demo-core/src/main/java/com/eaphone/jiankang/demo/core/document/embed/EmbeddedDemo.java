@@ -8,24 +8,22 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 
 /**
- * 商品实体
+ * 嵌套demo
  */
 @Data
-public class EmbeddedProduct {
-    /**
-     * 商品id
-     */
+public class EmbeddedDemo {
+
     @Field("id")
     @Indexed
     @JsonView(View.class)
     private String id;
     /**
-     * 商品昵称
+     * 昵称
      */
     @JsonView(View.class)
     private String name;
     /**
-     * 商品单价
+     * 单价
      */
     @JsonView(View.class)
     private Float price;

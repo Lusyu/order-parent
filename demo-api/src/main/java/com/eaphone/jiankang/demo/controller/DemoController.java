@@ -3,7 +3,7 @@ package com.eaphone.jiankang.demo.controller;
 
 import com.eaphone.jiankang.demo.core.document.Demo;
 import com.eaphone.jiankang.demo.core.service.DemoService;
-import com.eaphone.jiankang.demo.core.util.query.OrderPageParam;
+import com.eaphone.jiankang.demo.core.util.query.DemoPageParam;
 import com.eaphone.smarthealth.model.GeneralFlatPagedResponse;
 import com.eaphone.smarthealth.model.GeneralResponse;
 
@@ -13,7 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.Map;
 
 /**
  * 订单controller
@@ -25,11 +25,10 @@ public class DemoController extends BaseDemoController {
     @Autowired
     private DemoService demoService;
 
-
     /**
-     * 保存新的订单
+     * 保存新的demo
      *
-     * @param demo 新的订单
+     * @param demo
      * @return 是否成功
      */
     @PostMapping("/")
@@ -39,31 +38,31 @@ public class DemoController extends BaseDemoController {
     }
 
     /**
-     * 修改指定用户的订单地址
+     * 修改指定demo地址
      *
-     * @param demo 修改订单地址
-     * @return 是否修改成功
+     * @param demoId
+     * @param address 新地址
+     * @return
      */
-    @PatchMapping("/{orderId:[0-9a-z]{24}}/")
-    public GeneralResponse<Object> updateByUserIdAndOrderId(@PathVariable String orderId
-            ,@RequestBody Demo demo) {
-        demo.setOrderId(orderId);
-        return GeneralResponse.success(demoService.updateByUserIdAndOrderId(demo));
+    @PatchMapping("/{demoId:[0-9a-z]{24}}/address/")
+    public GeneralResponse<Boolean> updateDemoAddress(@PathVariable String demoId
+            ,@RequestParam String address) {
+        return GeneralResponse.success(demoService.updateDemoAddress(demoId,address));
     }
 
     /**
-     * 订单分页
+     * demo分页
      *
-     * @param orderPageParam 条件封装
+     * @param demoPageParam 条件封装
      * @return 当页数据
      */
     @GetMapping("/page/")
-    public GeneralResponse<Map<String, Object>> getOrderPage(OrderPageParam orderPageParam) {
-        return GeneralResponse.success(demoService.getOrderPage(orderPageParam));
+    public GeneralResponse<Map<String, Object>> getDemoPage(DemoPageParam demoPageParam) {
+        return GeneralResponse.success(demoService.getDemoPage(demoPageParam));
     }
 
     /**
-     * 订单分页
+     * demo分页
      * @param pageable 分页参数
      * @return
      */
@@ -73,19 +72,18 @@ public class DemoController extends BaseDemoController {
     }
 
     /**
-     * 订单状态更新
+     * demo状态更新
      *
-     * @param orderId     订单id
+     * @param demoId
      * @param status      需修改的状态
      * @return
      */
-    @PatchMapping("/{orderId}/status/{status}/")
-    public GeneralResponse<Boolean> updateOrderStatus(@ModelAttribute("token")String token
-                                                     ,@PathVariable String orderId
+    @PatchMapping("/{demoId:[0-9a-z]{24}}/status/{status:[0-6]{1}}/")
+    public GeneralResponse<Boolean> updateDemoStatus(@ModelAttribute("token")String token
+                                                     ,@PathVariable String demoId
                                                      ,@PathVariable Integer status) {
         String userId = checkUser(token);
-        boolean bool = demoService.updateStatus(orderId, status);
-        System.out.println(userId+"  "+bool);
+        boolean bool = demoService.updateStatus(demoId, status);
         return GeneralResponse.success(bool);
     }
 }

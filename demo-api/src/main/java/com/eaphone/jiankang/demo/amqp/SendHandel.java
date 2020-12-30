@@ -1,7 +1,7 @@
 package com.eaphone.jiankang.demo.amqp;
 
 import com.eaphone.jiankang.demo.config.DemoRabbitConfiguration;
-import com.eaphone.jiankang.demo.core.document.embed.EmbeddedProduct;
+import com.eaphone.jiankang.demo.core.document.embed.EmbeddedDemo;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,10 +16,10 @@ public class SendHandel {
 
     //@PostConstruct
     public void sendExchange(){
-        EmbeddedProduct embeddedProduct = new EmbeddedProduct();
-        embeddedProduct.setId("1");
-        embeddedProduct.setName("12 pro max");
-        embeddedProduct.setPrice(12222f);
-        rabbitTemplate.convertAndSend(DemoRabbitConfiguration.ORDER_STATUS_ROUTING_KEY, embeddedProduct);
+        EmbeddedDemo embeddedDemo = new EmbeddedDemo();
+        embeddedDemo.setId("1");
+        embeddedDemo.setName("12 pro max");
+        embeddedDemo.setPrice(12222f);
+        rabbitTemplate.convertAndSend(DemoRabbitConfiguration.ORDER_STATUS_ROUTING_KEY, embeddedDemo);
     }
 }
