@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: demo-api
+  config:
+    name: demo-api   #配置文件名
+  jmx:
+    default-domain: demo-api
+  main:
+    allow-bean-definition-overriding: true  #如果有重复的Bean 后面的Bean覆盖前面的Bean
+
+server:
+  port: 8989 #${randomServerPort.value[1000,5000]} #随机端口号
+  servlet:
+    application-display-name: demo-api
+    context-path: /
+
+ribbon:
+  eager-load:
+    enabled: true #开启Ribbon的饿加载
+    clients: passport-webapp, common-webapp  #指定需要饿加载 客户端名称 和 服务名
+
+logging:
+  config: classpath:logback.xml #日志文件
+
+eaphone:
+  job:
+    executor:
+      appName: order-executor
+      logRetentionDays: 7
+
+
+
+---
+spring:
+  profiles: test
+server:
+  port: 8080
+

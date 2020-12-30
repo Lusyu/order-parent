@@ -1,3 +1,0 @@
-# Auto Configure
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.is666is.lpl.order.client.autoconfiguration.OrderClientAutoConfiguration

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.eaphone.jiankang.demo</groupId>
+		<artifactId>demo-parent</artifactId>
+		<version>4.0.3-SNAPSHOT</version>
+	</parent>
+
+	<groupId>com.eaphone.jiankang.demo.client.test</groupId>
+	<artifactId>demo-client-test</artifactId>
+	<name>demo-client-test</name>
+	<description>Test Case for demo client</description>
+
+	<profiles>
+		<profile>
+			<id>netflix</id>
+			<dependencies>
+				<dependency>
+					<groupId>org.springframework.cloud</groupId>
+					<artifactId>spring-cloud-starter-config</artifactId>
+				</dependency>
+				<dependency>
+					<groupId>org.springframework.cloud</groupId>
+					<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
+
+	<properties>
+		<java.version>1.8</java.version>
+	</properties>
+
+	<dependencies>
+		<!--demo-client-->
+		<dependency>
+			<groupId>com.eaphone.jiankang.demo.client</groupId>
+			<artifactId>demo-client</artifactId>
+		</dependency>
+		<!--  jiankang-deps-webapp -->
+		<dependency>
+			<groupId>com.eaphone.jiankang</groupId>
+			<artifactId>jiankang-deps-webapp</artifactId>
+		</dependency>
+		 <!--jiankang-webbase-test-->
+		<dependency>
+			<groupId>com.eaphone.jiankang</groupId>
+			<artifactId>jiankang-webbase-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.eaphone.jiankang.demo.client</groupId>
+			<artifactId>demo-client</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.eaphone.jiankang.demo.client</groupId>
+			<artifactId>demo-client</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<!-- spring-boot-maven-plugin -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+</project>

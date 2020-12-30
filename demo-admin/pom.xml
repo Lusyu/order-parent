@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.eaphone.jiankang.demo</groupId>
+		<artifactId>demo-parent</artifactId>
+		<version>4.0.3-SNAPSHOT</version>
+	</parent>
+
+	<groupId>com.eaphone.jiankang.demo.admin</groupId>
+	<artifactId>demo-admin</artifactId>
+	<packaging>jar</packaging>
+<!--	<version>0.0.1-SNAPSHOT</version>-->
+	<name>demo-admin</name>
+	<description>Demo project for Spring Boot</description>
+
+	<properties>
+		<!--这里是接受外部参数，用于区别harbor上镜像的版本，根据时间来生成-->
+		<imageTag></imageTag>
+		<image.name>${docker.repository}/eaphone/family-admin:${imageTag}_${image.version}</image.name>
+	</properties>
+
+	<profiles>
+		<profile>
+			<id>netflix</id>
+			<dependencies>
+				<dependency>
+					<groupId>org.springframework.cloud</groupId>
+					<artifactId>spring-cloud-starter-config</artifactId>
+				</dependency>
+				<dependency>
+					<groupId>org.springframework.cloud</groupId>
+					<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
+
+	<dependencies>
+		<!-- demo-core -->
+		<dependency>
+			<groupId>com.eaphone.jiankang.demo.core</groupId>
+			<artifactId>demo-core</artifactId>
+		</dependency>
+		<!-- admin-console-commons -->
+		<dependency>
+			<groupId>com.eaphone.jiankang</groupId>
+			<artifactId>admin-console-commons</artifactId>
+		</dependency>
+		<!-- spring-boot-devtools -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>provided</scope>
+			<optional>true</optional>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>demo-admin</finalName>
+		<plugins>
+			<!-- spring-boot-maven-plugin -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+				<version>2.1.0</version>
+				<configuration>
+					<from>
+						<image>${docker.repository}/eaphone/openjdk:8-jre-alpine</image>
+					</from>
+					<to>
+						<image>${image.name}</image>
+					</to>
+					<container>
+						<environment>
+							<spring.profiles.active>${active.profile}</spring.profiles.active>
+						</environment>
+						<jvmFlags>
+							<jvmFlag>
+								-javaagent:/usr/skywalking/agent/skywalking-agent.jar=agent.service_name=family-admin,collector.backend_service=skywalking-oap:11800
+							</jvmFlag>
+						</jvmFlags>
+					</container>
+					<allowInsecureRegistries>true</allowInsecureRegistries>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

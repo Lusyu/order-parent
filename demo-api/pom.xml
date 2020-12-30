@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.eaphone.jiankang.demo</groupId>
+		<artifactId>demo-parent</artifactId>
+		<version>4.0.3-SNAPSHOT</version>
+	</parent>
+
+	<groupId>com.eaphone.jiankang.demo</groupId>
+	<artifactId>demo-api</artifactId>
+	<packaging>jar</packaging>
+	<name>demo-api</name>
+	<description>Demo project for Spring Boot</description>
+
+	<properties>
+		<!--这里是接受外部参数，用于区别harbor上镜像的版本，根据时间来生成-->
+		<imageTag></imageTag>
+		<image.name>${docker.repository}/eaphone/family-api:${imageTag}_${image.version}</image.name>
+	</properties>
+	<profiles>
+		<profile>
+			<id>netflix</id>
+			<dependencies>
+				<dependency>
+					<groupId>org.springframework.cloud</groupId>
+					<artifactId>spring-cloud-starter-config</artifactId>
+				</dependency>
+				<dependency>
+					<groupId>org.springframework.cloud</groupId>
+					<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.eaphone.jiankang</groupId>
+			<artifactId>passport-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.2.4.Final</version>
+		</dependency>
+		<!-- demo-core -->
+		<dependency>
+			<groupId>com.eaphone.jiankang.demo.core</groupId>
+			<artifactId>demo-core</artifactId>
+		</dependency>
+		<!-- jiankang-deps-webapp -->
+		<dependency>
+			<groupId>com.eaphone.jiankang</groupId>
+			<artifactId>jiankang-deps-webapp</artifactId>
+		</dependency>
+		<!-- jiankang-deps-rabbit -->
+		<dependency>
+			<groupId>com.eaphone.jiankang</groupId>
+			<artifactId>jiankang-deps-rabbit</artifactId>
+		</dependency>
+		<!-- jiankang-deps-job -->
+		<dependency>
+			<groupId>com.eaphone.jiankang</groupId>
+			<artifactId>jiankang-deps-job</artifactId>
+		</dependency>
+
+		<!-- jiankang-webbase-test -->
+		<dependency>
+			<groupId>com.eaphone.jiankang</groupId>
+			<artifactId>jiankang-webbase-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- spring-boot-configuration-processor -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<!-- spring-boot-devtools -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>provided</scope>
+			<optional>true</optional>
+		</dependency>
+	</dependencies>
+	<build>
+		<finalName>order</finalName>
+		<plugins>
+			<!-- spring-boot-maven-plugin -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<!-- spring-cloud-contract-maven-plugin -->
+			<plugin>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-contract-maven-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<baseClassForTests>com.eaphone.jiankang.demo.DemoApiApplicationTests</baseClassForTests>
+				</configuration>
+			</plugin>
+			<!-- asciidoctor-maven-plugin -->
+			<plugin>
+				<groupId>org.asciidoctor</groupId>
+				<artifactId>asciidoctor-maven-plugin</artifactId>
+				<extensions>true</extensions>
+			</plugin>
+			<!-- maven-javadoc-plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<extensions>true</extensions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

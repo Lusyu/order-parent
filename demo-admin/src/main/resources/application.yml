@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: demo-admin
+  config:
+    name: demo-admin
+  jmx:
+    default-domain: demo-admin
+
+server:
+  port: ${randomServerPort.value[1000,5000]}
+  servlet:
+    application-display-name: demo-admin
+    context-path: /
+
+ribbon:
+  eager-load:
+    enabled: true
+    clients: admin-console-webapp
+
+logging:
+  config: classpath:logback.xml
