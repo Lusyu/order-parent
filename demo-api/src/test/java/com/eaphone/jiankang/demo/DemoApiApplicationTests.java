@@ -1,6 +1,6 @@
 package com.eaphone.jiankang.demo;
 
-import com.eaphone.jiankang.demo.core.document.Order;
+import com.eaphone.jiankang.demo.core.document.Demo;
 import com.eaphone.jiankang.demo.core.document.embed.EmbeddedProduct;
 import com.eaphone.jiankang.demo.core.service.DemoService;
 import com.eaphone.jiankang.demo.core.util.query.OrderPageParam;
@@ -49,16 +49,15 @@ public abstract class DemoApiApplicationTests extends BaseSpringBootApplicationT
 		embeddedProduct.setId("35bbb4562d49c8016ea35bb6");
 		embeddedProduct.setName("电冰箱");
 		embeddedProduct.setPrice(1000F);
-		Order order = new Order();
-		order.setOrderId("59bbb4290d49c8016ea18bb6");
-		order.setOrderNumber("594784290949780165218436");
-		order.setUserId("59bbb4290d49c8016ea18bb4");
-		order.setPayPrice(1000F);
-		order.setShipTime(new Date());
-		order.setReceiptAddress("广州市....");
-		order.setStatus(1);
-		order.setList(Arrays.asList(embeddedProduct));
-		Order save = demoService.save(order);
+		Demo demo = new Demo();
+		demo.setOrderId("59bbb4290d49c8016ea18bb6");
+		demo.setUserId("59bbb4290d49c8016ea18bb4");
+		demo.setPayPrice(1000F);
+		demo.setShipTime(new Date());
+		demo.setReceiptAddress("广州市....");
+		demo.setStatus(1);
+		demo.setList(Arrays.asList(embeddedProduct));
+		Demo save = demoService.save(demo);
 		pageOrder();
 		initUpdateTestDataOrder();
 	}
@@ -68,16 +67,15 @@ public abstract class DemoApiApplicationTests extends BaseSpringBootApplicationT
 		embeddedProduct.setId("35bbb4562d49c8016ea35bb6");
 		embeddedProduct.setName("机械革命");
 		embeddedProduct.setPrice(800F);
-		Order order = new Order();
-		order.setOrderId("59bbb4290d49c8016ea18bb6");
-		order.setOrderNumber("594784290949780165218433");
-		order.setUserId("59bbb4290d49c8016ea18bb4");
-		order.setPayPrice(800F);
-		order.setShipTime(new Date());
-		order.setReceiptAddress("广州市....");
-		order.setStatus(0);
-		order.setList(Arrays.asList(embeddedProduct));
-		boolean b = demoService.updateByUserIdAndOrderId(order);
+		Demo demo = new Demo();
+		demo.setOrderId("59bbb4290d49c8016ea18bb6");
+		demo.setUserId("59bbb4290d49c8016ea18bb4");
+		demo.setPayPrice(800F);
+		demo.setShipTime(new Date());
+		demo.setReceiptAddress("广州市....");
+		demo.setStatus(0);
+		demo.setList(Arrays.asList(embeddedProduct));
+		boolean b = demoService.updateByUserIdAndOrderId(demo);
 	}
 
 
@@ -87,17 +85,11 @@ public abstract class DemoApiApplicationTests extends BaseSpringBootApplicationT
 		orderPageParam.setPageSize(2);
 		orderPageParam.setMinPayPrice(200F);
 		orderPageParam.setMaxPayPrice(2000F);
-		try{
-			orderPageParam.setMinShipTime(new SimpleDateFormat("yyyy-MM-dd").parse("1971-12-12"));
-			orderPageParam.setMaxShipTime(new SimpleDateFormat("yyyy-MM-dd").parse("2100-12-12"));
-		}catch (Exception e){
-
-		}
-		orderPageParam.setOrderNumber("594784290949780165218436");
+		orderPageParam.setOrderNumber("59bbb4290d49c8016ea18bb6");
 		orderPageParam.setStatus(1);
 		Map<String, Object> orderPage = demoService.getOrderPage(orderPageParam);
-		List<Order> orders= (List<Order>) orderPage.get("orders");
-		System.out.println(orders.size()+"             test");
-		orders.forEach(System.out::println);
+		List<Demo> demos = (List<Demo>) orderPage.get("orders");
+		System.out.println(demos.size()+"             test");
+		demos.forEach(System.out::println);
 	}
 }

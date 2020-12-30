@@ -8,7 +8,7 @@ import org.springframework.cloud.contract.spec.Contract
 Contract.make {
     request {
         method GET()
-        url $(c(regex("/secret/demo/status/[0-9a-z]+/")),p("/secret/demo/status/594784290949780165218436/"))
+        url $(c(regex("/secret/demo/status/[0-9a-z]+/")),p("/secret/demo/status/59bbb4290d49c8016ea18bb6/"))
     }
     response {
         status OK()

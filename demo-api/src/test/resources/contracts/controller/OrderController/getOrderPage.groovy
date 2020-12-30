@@ -8,15 +8,13 @@ import org.springframework.cloud.contract.spec.Contract
 Contract.make {
     request {
         method GET()
-        urlPath("/order/page/") {
+        urlPath("/demo/page/") {
             queryParameters {
                 parameter("currentPage", $(c(regex("[0-9]+")), p("1")))
                 parameter("pageSize", $(c(regex("[0-9]+")), p("2")))
                 parameter("minPayPrice", $(c(regex("[0-9]+")), p("200")))
                 parameter("maxPayPrice", $(c(regex("[0-9]+")), p("2000")))
-                parameter("minShipTime", $(c(regex(".+")), p("1971-12-12")))
-                parameter("maxShipTime", $(c(regex(".+")), p("2100-12-12")))
-                parameter("orderNumber", $(c(regex(".+")), p("594784290949780165218436")))
+                parameter("orderNumber", $(c(regex(".+")), p("59bbb4290d49c8016ea18bb6")))
                 parameter("status", $(c(regex("[0-3]{1}")), p("1")))
             }
         }
@@ -32,7 +30,6 @@ Contract.make {
                         totalPage  : $(c("25"), p(regex("[0-9]+"))),
                         orders     : [[
                                               orderId       : $(c("59bbb4290d49c8016ea18bb6"), p(regex("[0-9a-z]{24}"))),
-                                              orderNumber   : $(c("594784290949780165218433"), p(regex("[0-9]{24}"))),
                                               userId        : $(c("59bbb4290d49c8016ea18bb4"), p(regex("[0-9a-z]{24}"))),
                                               payPrice      : $(c("999"), p(regex(".+"))),
                                               shipTime      : $(c("2020-10-01"), p(regex(".+"))),

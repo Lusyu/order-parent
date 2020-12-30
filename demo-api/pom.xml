@@ -87,7 +87,7 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>order</finalName>
+		<finalName>demo</finalName>
 		<plugins>
 			<!-- spring-boot-maven-plugin -->
 			<plugin>

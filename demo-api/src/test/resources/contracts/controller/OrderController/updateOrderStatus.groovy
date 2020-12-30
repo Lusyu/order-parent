@@ -9,8 +9,8 @@ import org.springframework.cloud.contract.spec.Contract
 Contract.make {
     request {
         method PATCH()
-        url $(c("/order/[0-9a-z]{24}/status/[0-3]{1}/")
-                , p("/order/59bbb4290d49c8016ea18bb6/status/1/"))
+        url $(c("/demo/[0-9a-z]{24}/status/[0-3]{1}/")
+                , p("/demo/59bbb4290d49c8016ea18bb6/status/1/"))
         headers {
             header('Authorization',
                     $(c(regex('Bearer [0-9a-z]{8}(-[0-9a-z]{4}){3}-[0-9a-z]{12}'))

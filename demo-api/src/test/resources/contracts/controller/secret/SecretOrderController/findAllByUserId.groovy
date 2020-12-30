@@ -17,7 +17,6 @@ Contract.make {
                 success: $(c(true), p(regex(anyBoolean()))),
                 data: [[
                                orderId       : $(c("59bbb4290d49c8016ea18bb6"), p(regex("[0-9a-z]{24}"))),
-                               orderNumber   : $(c("594784290949780165218436"), p(regex("[0-9]{24}"))),
                                userId        : $(c("59bbb4290d49c8016ea18bb4"), p(regex("[0-9a-z]{24}"))),
                                payPrice      : $(c("999"), p(regex(".+"))),
                                shipTime      : $(c("2020-10-01"), p(regex(".+"))),

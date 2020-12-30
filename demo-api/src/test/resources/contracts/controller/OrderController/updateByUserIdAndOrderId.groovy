@@ -8,11 +8,10 @@ import org.springframework.cloud.contract.spec.Contract
 Contract.make {
     request {
         method PATCH()
-        url $(c(regex("/order/[0-9a-z]{24}/")), p("/order/59bbb4290d49c8016ea18bb6/"))
+        url $(c(regex("/demo/[0-9a-z]{24}/")), p("/demo/59bbb4290d49c8016ea18bb6/"))
         body(
                 [
                         orderId       : $(c(regex("[0-9a-z]{24}")), p("59bbb4290d49c8016ea18bb6")),
-                        orderNumber   : $(c(regex("[0-9]{24}")), p("594784290949780165218436")),
                         userId        : $(c(regex("[0-9a-z]{24}")), p("59bbb4290d49c8016ea18bb4")),
                         payPrice      : $(c(regex(".+")), p("999")),
                         shipTime      : $(c(regex(".+")), p("2020-10-01")),

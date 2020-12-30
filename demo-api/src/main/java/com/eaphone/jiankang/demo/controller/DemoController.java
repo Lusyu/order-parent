@@ -1,7 +1,7 @@
 package com.eaphone.jiankang.demo.controller;
 
 
-import com.eaphone.jiankang.demo.core.document.Order;
+import com.eaphone.jiankang.demo.core.document.Demo;
 import com.eaphone.jiankang.demo.core.service.DemoService;
 import com.eaphone.jiankang.demo.core.util.query.OrderPageParam;
 import com.eaphone.smarthealth.model.GeneralFlatPagedResponse;
@@ -19,7 +19,7 @@ import java.util.*;
  * 订单controller
  */
 @RestController
-@RequestMapping("/order")
+@RequestMapping("/demo")
 @Slf4j
 public class DemoController extends BaseDemoController {
     @Autowired
@@ -29,26 +29,26 @@ public class DemoController extends BaseDemoController {
     /**
      * 保存新的订单
      *
-     * @param order 新的订单
+     * @param demo 新的订单
      * @return 是否成功
      */
     @PostMapping("/")
-    public GeneralResponse<Boolean> saveOrder(@RequestBody Order order) {
-        demoService.insert(order);
+    public GeneralResponse<Boolean> saveOrder(@RequestBody Demo demo) {
+        demoService.insert(demo);
         return GeneralResponse.success(true);
     }
 
     /**
      * 修改指定用户的订单地址
      *
-     * @param order 修改订单地址
+     * @param demo 修改订单地址
      * @return 是否修改成功
      */
     @PatchMapping("/{orderId:[0-9a-z]{24}}/")
     public GeneralResponse<Object> updateByUserIdAndOrderId(@PathVariable String orderId
-            ,@RequestBody Order order) {
-        order.setOrderId(orderId);
-        return GeneralResponse.success(demoService.updateByUserIdAndOrderId(order));
+            ,@RequestBody Demo demo) {
+        demo.setOrderId(orderId);
+        return GeneralResponse.success(demoService.updateByUserIdAndOrderId(demo));
     }
 
     /**
@@ -68,7 +68,7 @@ public class DemoController extends BaseDemoController {
      * @return
      */
     @GetMapping("/pageTwo/")
-    public GeneralResponse<Page<Order>> pageTwo(@ModelAttribute("page") Pageable pageable){
+    public GeneralResponse<Page<Demo>> pageTwo(@ModelAttribute("page") Pageable pageable){
         return GeneralFlatPagedResponse.success(demoService.pageTwo(pageable));
     }
 

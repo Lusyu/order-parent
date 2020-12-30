@@ -19,15 +19,14 @@ import java.util.List;
  * 订单实体
  */
 @Data
-@Document(collection = "pms_order")
+@Document(collection = "pms_demo")
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @CompoundIndex(name = "idx_order_id", def = "{orderId:-1}")
-public class Order extends BaseDocument implements Serializable {
+public class Demo extends BaseDocument implements Serializable {
 
     public static final String ORDER_ID = "orderId";
     public static final String USER_ID="userId";
-    public static final String ORDER_NUMBER = "orderNumber";
     public static final String STATUS = "status";
     public static final String RECEIPT_ADDRESS="receiptAddress";
 
@@ -37,12 +36,6 @@ public class Order extends BaseDocument implements Serializable {
     @Indexed
     @JsonView(View.class)
     private String orderId;
-    /**
-     * 订单编号
-     */
-    @JsonView(View.class)
-    private String orderNumber;
-
     /**
      * 用户的id
      */
