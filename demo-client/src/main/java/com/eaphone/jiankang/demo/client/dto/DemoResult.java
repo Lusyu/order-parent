@@ -16,7 +16,7 @@ public class DemoResult {
     /**
      * 价格
      */
-    private BigDecimal payPrice;
+    private float payPrice;
     /**
      * 时间
      */

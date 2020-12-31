@@ -13,16 +13,15 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class DemoRabbitConfiguration extends DefaultRabbitConfiguration {
-    public static final String ORDER_STATUS_QUEUE_NAME="order.status.queue";
-    public static final String ORDER_STATUS_ROUTING_KEY="xla.xlb";
-
+    public static final String DEMO_QUEUE_NAME="demo.queue";
+    public static final String DEMO_ROUTING_KEY="xla.xlb";
 
     @Bean
     public Queue queue(){
-        return new Queue(ORDER_STATUS_QUEUE_NAME,true);
+        return new Queue(DEMO_QUEUE_NAME,true);
     }
     @Bean
     public Binding exBindQueue(DirectExchange exchange,Queue queue){
-        return BindingBuilder.bind(queue).to(exchange).with(ORDER_STATUS_ROUTING_KEY);
+        return BindingBuilder.bind(queue).to(exchange).with(DEMO_ROUTING_KEY);
     }
 }

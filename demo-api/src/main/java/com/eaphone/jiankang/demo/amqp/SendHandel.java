@@ -6,6 +6,8 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+
 /**
  * mq测试用例
  */
@@ -20,6 +22,6 @@ public class SendHandel {
         embeddedDemo.setId("1");
         embeddedDemo.setName("12 pro max");
         embeddedDemo.setPrice(12222f);
-        rabbitTemplate.convertAndSend(DemoRabbitConfiguration.ORDER_STATUS_ROUTING_KEY, embeddedDemo);
+        rabbitTemplate.convertAndSend(DemoRabbitConfiguration.DEMO_ROUTING_KEY, embeddedDemo);
     }
 }

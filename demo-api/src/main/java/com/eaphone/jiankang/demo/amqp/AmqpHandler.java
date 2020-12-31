@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class AmqpHandler {
 
-   @RabbitListener(queues= DemoRabbitConfiguration.ORDER_STATUS_QUEUE_NAME)
+   @RabbitListener(queues= DemoRabbitConfiguration.DEMO_QUEUE_NAME)
     public void dealOrderStatus(EmbeddedDemo embeddedDemo){
         //.....
        System.out.println("收到消息  --------------"+ embeddedDemo);

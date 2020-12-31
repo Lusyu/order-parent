@@ -19,7 +19,7 @@ public class DemoClientAutoConfiguration {
 
     @ConditionalOnMissingBean(DemoClient.class)
     @Bean
-    public DemoClient orderClient() {
+    public DemoClient demoClient() {
         return new DemoClient();
     }
 }

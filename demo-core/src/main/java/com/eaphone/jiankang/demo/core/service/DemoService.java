@@ -1,7 +1,6 @@
 package com.eaphone.jiankang.demo.core.service;
 
 import com.eaphone.jiankang.demo.core.document.Demo;
-
 import com.eaphone.jiankang.demo.core.redis.UserDemoKeys;
 import com.eaphone.jiankang.demo.core.repo.DemoRepo;
 import com.eaphone.jiankang.demo.core.util.query.DemoPageParam;
@@ -158,7 +157,6 @@ public class DemoService extends BaseMongoService<Demo> {
                         , Update.update(Demo.STATUS, status)
                         , Demo.class).getModifiedCount() > 0;
     }
-
 
     /**
      * demo更新

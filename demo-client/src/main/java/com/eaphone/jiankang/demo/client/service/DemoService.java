@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 
 /**
- * 订单client
+ * demo client
  */
-@FeignClient(name = "demo-api",contextId = "demo",path = "/secret/order/",fallback = DemoServiceFallBack.class)
+@FeignClient(name = "demo-api",contextId = "demo",path = "/secret/demo/",fallback = DemoServiceFallBack.class)
 public interface DemoService {
     /**
      * 获取指定用户的所有demo

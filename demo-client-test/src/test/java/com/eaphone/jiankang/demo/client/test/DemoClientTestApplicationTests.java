@@ -1,6 +1,5 @@
 package com.eaphone.jiankang.demo.client.test;
 
-
 import com.eaphone.jiankang.demo.client.DemoClient;
 import com.eaphone.jiankang.demo.client.dto.DemoResult;
 import com.eaphone.xxs.test.BaseSpringBootApplicationTest;

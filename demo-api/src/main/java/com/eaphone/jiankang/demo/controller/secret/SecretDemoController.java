@@ -1,12 +1,10 @@
 package com.eaphone.jiankang.demo.controller.secret;
-
 import com.eaphone.jiankang.demo.core.document.Demo;
 import com.eaphone.jiankang.demo.core.service.DemoService;
 import com.eaphone.smarthealth.api.controller.SecretApi;
 import com.eaphone.smarthealth.model.GeneralResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 /**
