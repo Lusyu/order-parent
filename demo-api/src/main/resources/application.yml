@@ -25,7 +25,7 @@ logging:
 eaphone:
   job:
     executor:
-      appName: order-executor
+      appName: demo-executor
       logRetentionDays: 7
 
 

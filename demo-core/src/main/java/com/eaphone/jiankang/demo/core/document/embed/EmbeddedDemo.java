@@ -1,9 +1,8 @@
 package com.eaphone.jiankang.demo.core.document.embed;
 
-import com.eaphone.smarthealth.jsonview.View;
-import com.fasterxml.jackson.annotation.JsonView;
+import com.eaphone.jiankang.demo.core.dto.DemoChildrenDto;
 import lombok.Data;
-import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 
@@ -14,17 +13,20 @@ import org.springframework.data.mongodb.core.mapping.Field;
 public class EmbeddedDemo {
 
     @Field("id")
-    @Indexed
-    @JsonView(View.class)
-    private String id;
+    private String id;//id
+
+    private String name;//名称
+
+    private Float price;//价格
+
     /**
-     * 昵称
+     * 新增 语法糖
+     * @param demoChildrenDto
+     * @return
      */
-    @JsonView(View.class)
-    private String name;
-    /**
-     * 单价
-     */
-    @JsonView(View.class)
-    private Float price;
+    public static EmbeddedDemo build(DemoChildrenDto demoChildrenDto){
+        EmbeddedDemo embeddedDemo = new EmbeddedDemo();
+        BeanUtils.copyProperties(demoChildrenDto,embeddedDemo);
+        return embeddedDemo;
+    }
 }

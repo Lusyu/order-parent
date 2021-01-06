@@ -3,7 +3,6 @@ package com.eaphone.jiankang.demo;
 import com.eaphone.jiankang.demo.core.document.Demo;
 import com.eaphone.jiankang.demo.core.document.embed.EmbeddedDemo;
 import com.eaphone.jiankang.demo.core.service.DemoService;
-import com.eaphone.jiankang.demo.core.util.query.DemoPageParam;
 import com.eaphone.xxs.test.BaseSpringBootApplicationTest;
 
 import org.junit.Test;
@@ -12,18 +11,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.contract.stubrunner.spring.AutoConfigureStubRunner;
 import org.springframework.cloud.contract.stubrunner.spring.StubRunnerProperties;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Demo PAI 集成测试用例
  */
-@SpringBootTest(classes = DemoApiApplication.class)
+@SpringBootTest(classes = DemoApplication.class)
 @AutoConfigureStubRunner( ids ={"com.eaphone.jiankang:passport-webapp:+:stubs"}
 		, repositoryRoot = "http://svn.xinxiangsui.net/nexus/content/groups/eaphone-g08/"
 		,stubsMode = StubRunnerProperties.StubsMode.REMOTE)
@@ -44,40 +40,35 @@ public abstract class DemoApiApplicationTests extends BaseSpringBootApplicationT
 		embeddedDemo.setId("35bbb4562d49c8016ea35bb6");
 		embeddedDemo.setName("机械革命X10Ti");
 		embeddedDemo.setPrice(1000F);
+
+
+		List<EmbeddedDemo> children= new ArrayList<>();
+		children.add(embeddedDemo);
+
+
 		Demo demo = new Demo();
-		demo.setDemoId("59bbb4290d49c8016ea18bb6");
-		demo.setUserId("59bbb4290d49c8016ea18bb4");
-		demo.setPayPrice(1000F);
-		demo.setShipTime(new Date());
-		demo.setReceiptAddress("广州市....");
-		demo.setStatus(1);
-		demo.setList(Arrays.asList(embeddedDemo));
-		Demo save = demoService.save(demo);
-		System.out.println("initSomeTestData :"+save);
-		getDemoPage();
-		updateDemoAddressTest();
+		demo.setId("5ff3e1ab3017c813400bf90e");
+		demo.setName("jack");
+		demo.setPrice(1000f);
+		demo.setCreateTime(new Date());
+		demo.setChildren(children);
+
+		Demo demoTwo = new Demo();
+		demoTwo.setId("5ff3e1ac3017c813400bf90f");
+		demoTwo.setName("lucy");
+		demoTwo.setPrice(1000f);
+		demo.setCreateTime(new Date());
+		demo.setChildren(children);
+
+		demoService.save(demo);
+		demoService.save(demoTwo);
+		demoService.findAll().forEach(System.out::println);
+
+		findAll();
 	}
 
-	private void updateDemoAddressTest(){
-		boolean b = demoService.updateDemoAddress("59bbb4290d49c8016ea18bb6","北京市...");
-		System.out.println(b+"	updateDemoAddressTest");
-	}
 
-	public void getDemoPage(){
-		DemoPageParam demoPageParam = new DemoPageParam();
-		demoPageParam.setCurrentPage(1);
-		demoPageParam.setPageSize(10);
-		demoPageParam.setMinPayPrice(200F);
-		demoPageParam.setMaxPayPrice(2000F);
-		demoPageParam.setDemoId("59bbb4290d49c8016ea18bb6");
-		demoPageParam.setStatus(1);
-		Map<String, Object> orderPage = demoService.getDemoPage(demoPageParam);
-		List<Demo> demos = (List<Demo>)orderPage.get("demos");
-		System.out.println(demos.size()+"  getOrderPageTest");
-		DateTimeFormatter dateFormat=DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		demos.forEach(demo -> {
-			LocalDateTime dateTime = LocalDateTime.ofInstant(demo.getShipTime().toInstant(), ZoneId.systemDefault());
-			System.out.println(dateFormat.format(dateTime) +" "+demo+"  getDemoPage");
-		});
+	public void findAll(){
+		demoService.findAll().forEach(System.out::println);
 	}
 }

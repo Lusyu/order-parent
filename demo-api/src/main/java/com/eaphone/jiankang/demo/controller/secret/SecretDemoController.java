@@ -1,10 +1,16 @@
 package com.eaphone.jiankang.demo.controller.secret;
+
 import com.eaphone.jiankang.demo.core.document.Demo;
+import com.eaphone.jiankang.demo.core.dto.DemoDto;
 import com.eaphone.jiankang.demo.core.service.DemoService;
+import com.eaphone.jiankang.demo.core.vo.DemoDetailsVo;
+import com.eaphone.jiankang.demo.core.vo.DemoVo;
 import com.eaphone.smarthealth.api.controller.SecretApi;
 import com.eaphone.smarthealth.model.GeneralResponse;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 /**
@@ -18,51 +24,64 @@ public class SecretDemoController {
     private DemoService demoService;
 
     /**
-     * 获取指定用户的所有demo
-     *
-     * @param userId 用户id
-     * @return demo
-     */
-    @GetMapping("/{userId:[0-9a-z]{24}}/demos/")
-    public GeneralResponse<List<Demo>> findUserDemos(@PathVariable String userId) {
-        return GeneralResponse.success(demoService.findAllByUserId(userId));
-    }
-
-    /**
-     * 获取指定demo状态
-     *
-     * @param demoId
-     * @return 状态
-     */
-    @GetMapping("/status/{demoId:[0-9a-z]+}/")
-    public GeneralResponse<Integer> findDemoStatus(@PathVariable String demoId) {
-        return GeneralResponse.success(demoService.findDemoStatusByDemoId(demoId));
-    }
-
-    /**
      * 生成demo
      *
-     * @param demo 新demo
+     * @param demoDto 新demo
      * @return demo是否生成成功
      */
-
     @PostMapping("/")
-    public GeneralResponse<Boolean> saveDemo(@RequestBody Demo demo) {
-        return GeneralResponse.success(demoService.save(demo) != null);
+    public GeneralResponse<Boolean> saveDemo(@RequestBody DemoDto demoDto) {
+        Demo demo = new Demo();
+        BeanUtils.copyProperties(demoDto,demo);
+        demoService.insert(demo);
+        return GeneralResponse.success(true);
     }
 
     /**
-     * 更新demo
+     * 删除指定Demo
      *
-     * @param demo 需修改的demo
-     * @return     demo是否修改成功
+     * @param
+     * @return
      */
-    @PatchMapping("/{id:[a-z0-9]+}/")
-    public GeneralResponse<Boolean> updateDemo(@PathVariable String id, @RequestBody Demo demo) {
-        if (demo == null) {
-            return GeneralResponse.fail("demo不能为空!");
-        }
-        demo.setId(id);
-        return GeneralResponse.success(demoService.updateDemo(demo));
+    @DeleteMapping("/{id:[0-9a-z]{24}}/")
+    public GeneralResponse<Boolean> deleteDemoById(@PathVariable String id) {
+        return GeneralResponse.success(demoService.deleteDemoById(id));
+    }
+
+    /**
+     * 根据id更新demo的名称和价格
+     *
+     * @param id
+     * @param name 名称
+     * @param price 价格
+     * @return
+     */
+    @PatchMapping("/id/{id:[0-9a-z]{24}}/name/{name:.+}/price/{price:.+}/")
+    public GeneralResponse<Boolean> updateDemoById(@PathVariable String id
+            , @PathVariable String name
+            ,@PathVariable Float price) {
+        return GeneralResponse.success(demoService.updateDemoNameById(id, name,price));
+    }
+
+    /**
+     * 根据id获取指定的demo
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id:[0-9a-z]{24}}/")
+    public GeneralResponse<DemoDetailsVo> findDemoById(@PathVariable String id) {
+        return GeneralResponse.success(demoService.findDemoById(id));
+    }
+
+    /**
+     * 获取所有demo
+     *
+     * @param
+     * @return demo
+     */
+    @GetMapping("/")
+    public GeneralResponse<List<DemoVo>> findDemos() {
+        return GeneralResponse.success(demoService.list());
     }
 }

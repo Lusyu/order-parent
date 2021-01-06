@@ -4,11 +4,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
 
 @SpringCloudApplication
-public class DemoApiApplication {
+public class DemoApplication {
 
 
 	public static void main(String[] args) {
-		SpringApplication.run(DemoApiApplication.class, args);
+		SpringApplication.run(DemoApplication.class, args);
 	}
 
 

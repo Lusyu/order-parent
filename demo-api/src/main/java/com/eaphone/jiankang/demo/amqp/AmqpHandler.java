@@ -1,7 +1,7 @@
 package com.eaphone.jiankang.demo.amqp;
 
+import com.eaphone.jiankang.demo.amqp.message.DemoMessage;
 import com.eaphone.jiankang.demo.config.DemoRabbitConfiguration;
-import com.eaphone.jiankang.demo.core.document.embed.EmbeddedDemo;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 public class AmqpHandler {
 
    @RabbitListener(queues= DemoRabbitConfiguration.DEMO_QUEUE_NAME)
-    public void dealOrderStatus(EmbeddedDemo embeddedDemo){
+    public void dealOrderStatus(DemoMessage message){
         //.....
-       System.out.println("收到消息  --------------"+ embeddedDemo);
+       System.out.println("收到消息  --------------"+ message);
     }
 }

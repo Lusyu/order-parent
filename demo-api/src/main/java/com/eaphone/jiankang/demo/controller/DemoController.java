@@ -1,22 +1,24 @@
 package com.eaphone.jiankang.demo.controller;
 
-
 import com.eaphone.jiankang.demo.core.document.Demo;
+import com.eaphone.jiankang.demo.core.dto.DemoDto;
+import com.eaphone.jiankang.demo.core.dto.DemoChildrenDto;
 import com.eaphone.jiankang.demo.core.service.DemoService;
-import com.eaphone.jiankang.demo.core.util.query.DemoPageParam;
+import com.eaphone.jiankang.demo.core.vo.DemoDetailsVo;
+import com.eaphone.jiankang.demo.core.vo.DemoVo;
 import com.eaphone.smarthealth.model.GeneralFlatPagedResponse;
 import com.eaphone.smarthealth.model.GeneralResponse;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
+import java.util.List;
 
 /**
- * 订单controller
+ * Demo controller
  */
 @RestController
 @RequestMapping("/demo")
@@ -28,62 +30,114 @@ public class DemoController extends BaseDemoController {
     /**
      * 保存新的demo
      *
-     * @param demo
+     * @param demoDto
      * @return 是否成功
      */
     @PostMapping("/")
-    public GeneralResponse<Boolean> saveOrder(@RequestBody Demo demo) {
+    public GeneralResponse<Boolean> saveDemo(@ModelAttribute("token") String token
+            , @RequestBody DemoDto demoDto) {
+        checkUser(token);
+        Demo demo = new Demo();
+        BeanUtils.copyProperties(demoDto, demo);
         demoService.insert(demo);
         return GeneralResponse.success(true);
     }
 
     /**
-     * 修改指定demo地址
+     * 删除 demo
      *
-     * @param demoId
-     * @param address 新地址
+     * @param id
      * @return
      */
-    @PatchMapping("/{demoId:[0-9a-z]{24}}/address/")
-    public GeneralResponse<Boolean> updateDemoAddress(@PathVariable String demoId
-            ,@RequestParam String address) {
-        return GeneralResponse.success(demoService.updateDemoAddress(demoId,address));
+    @DeleteMapping("/{id:[0-9a-z]{24}}/")
+    public GeneralResponse<Boolean> deleteDemoById(@ModelAttribute("token") String token
+            , @PathVariable String id) {
+        checkUser(token);
+        return GeneralResponse.success(demoService.deleteDemoById(id));
+    }
+
+    /**
+     * 更新嵌套字段
+     *
+     * @param id
+     * @param demoChildren 新值
+     * @return
+     */
+    @PatchMapping("/id/{id:[0-9a-z]{24}}/updateChildren/")
+    public GeneralResponse<Boolean> updateEmbedDemo(@ModelAttribute("token") String token
+            , @PathVariable String id
+            , @RequestBody DemoChildrenDto demoChildren) {
+        checkUser(token);
+        return GeneralResponse.success(demoService.updateEmbedDemo(id, demoChildren));
+    }
+
+    /**
+     * 对指定demo新增嵌套数据
+     *
+     * @param token
+     * @param id
+     * @param demoChildrenList 嵌套的值集
+     * @return
+     */
+    @PatchMapping("/id/{id:[0-9a-z]{24}}/saveChildren/")
+    public GeneralResponse<Boolean> updateSaveEmbedDemo(@ModelAttribute("token") String token
+            , @PathVariable String id
+            , @RequestBody List<DemoChildrenDto> demoChildrenList) {
+        checkUser(token);
+        demoService.updateSaveEmbedDemo(id, demoChildrenList);
+        return GeneralResponse.success(true);
+
+    }
+
+    /**
+     * 对指定demo删除嵌套数据
+     *
+     * @param token
+     * @param id
+     * @param demoChildrenIds 嵌套的id集
+     * @return
+     */
+    @PatchMapping("/id/{id:[0-9a-z]{24}}/deleteChildren/")
+    public GeneralResponse<Boolean> updateDeleteEmbedDemo(@ModelAttribute("token") String token
+            , @PathVariable String id
+            , @RequestBody List<String> demoChildrenIds) {
+        checkUser(token);
+        demoService.updateDeleteEmbedDemo(id, demoChildrenIds);
+        return GeneralResponse.success(true);
+    }
+
+    /**
+     * 获取指定demo详情
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id:[0-9a-z]{24}}/")
+    public GeneralResponse<DemoDetailsVo> findDemoById(@ModelAttribute("token") String token
+            ,@PathVariable String id) {
+        //checkUser(token);
+        return GeneralResponse.success(demoService.findDemoById(id));
+    }
+
+    /**
+     * demo不分页
+     *
+     * @return
+     */
+    @GetMapping("/")
+    public GeneralResponse<List<DemoVo>> list() {
+        return GeneralResponse.success(demoService.list());
     }
 
     /**
      * demo分页
      *
-     * @param demoPageParam 条件封装
-     * @return 当页数据
-     */
-    @GetMapping("/page/")
-    public GeneralResponse<Map<String, Object>> getDemoPage(DemoPageParam demoPageParam) {
-        return GeneralResponse.success(demoService.getDemoPage(demoPageParam));
-    }
-
-    /**
-     * demo分页
      * @param pageable 分页参数
      * @return
      */
-    @GetMapping("/pageTwo/")
-    public GeneralResponse<Page<Demo>> pageTwo(@ModelAttribute("page") Pageable pageable){
-        return GeneralFlatPagedResponse.success(demoService.pageTwo(pageable));
+    @GetMapping("/page/")
+    public GeneralFlatPagedResponse<Demo> page(@ModelAttribute("page") Pageable pageable) {
+        return GeneralFlatPagedResponse.build(demoService.page(pageable));
     }
 
-    /**
-     * demo状态更新
-     *
-     * @param demoId
-     * @param status      需修改的状态
-     * @return
-     */
-    @PatchMapping("/{demoId:[0-9a-z]{24}}/status/{status:[0-6]{1}}/")
-    public GeneralResponse<Boolean> updateDemoStatus(@ModelAttribute("token")String token
-                                                     ,@PathVariable String demoId
-                                                     ,@PathVariable Integer status) {
-        String userId = checkUser(token);
-        boolean bool = demoService.updateStatus(demoId, status);
-        return GeneralResponse.success(bool);
-    }
 }

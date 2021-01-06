@@ -1,66 +1,56 @@
 package com.eaphone.jiankang.demo.core.document;
 import com.eaphone.jiankang.demo.core.document.embed.EmbeddedDemo;
-import com.eaphone.smarthealth.jsonview.View;
+import com.eaphone.jiankang.demo.core.vo.DemoDetailsVo;
+import com.eaphone.jiankang.demo.core.vo.DemoVo;
 import com.eaphone.smarthealth.model.BaseDocument;
-import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.springframework.data.mongodb.core.index.CompoundIndex;
-import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 /**
  * demo实体
  */
 @Data
-@Document(collection = "pms_demo")
+@Document(collection = "demo")
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-@CompoundIndex(name = "idx_demo_id", def = "{demoId:-1}")
 public class Demo extends BaseDocument implements Serializable {
 
-    public static final String DEMO_ID = "demoId";
-    public static final String USER_ID="userId";
-    public static final String STATUS = "status";
-    public static final String RECEIPT_ADDRESS="receiptAddress";
+    public static final String NAME = "name";
+    public static final String CHILDREN="children";
+    public static final String EMBED_ID="children.id";
+    public static final String PRICE="price";
 
+    private String name;//名称
 
-    @Indexed
-    @JsonView(View.class)
-    private String demoId;
+    private Float price;//价格
+
+    private List<EmbeddedDemo> children;//嵌套demo
+
     /**
-     * 用户id
+     * 不分页  语法糖
+     * @param demo
+     * @return
      */
-    @Indexed
-    @JsonView(View.class)
-    private String userId;
+    public static DemoVo build(Demo demo){
+        DemoVo demoVo = new DemoVo();
+        BeanUtils.copyProperties(demo,demoVo);
+        return demoVo;
+    }
+
     /**
-     * 总价
+     * 详情    语法糖
+     * @param demo
+     * @return
      */
-    @JsonView(View.class)
-    private Float payPrice;
-    /**
-     * 付款时间
-     */
-    @JsonView(View.class)
-    private Date shipTime;
-    /**
-     * 收货地址
-     */
-    @JsonView(View.class)
-    private String receiptAddress;
-    /**
-     * 状态
-     */
-    @JsonView(View.class)
-    private Integer status;
-    /**
-     * 嵌套demo
-     */
-    @JsonView(View.class)
-    private List<EmbeddedDemo> list;
+    public static DemoDetailsVo buildDetail(Demo demo){
+        DemoDetailsVo demoDetailsVo = new DemoDetailsVo();
+        BeanUtils.copyProperties(demo,demoDetailsVo);
+        return demoDetailsVo;
+    }
+
 }

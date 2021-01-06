@@ -50,16 +50,6 @@
 			<artifactId>jiankang-webbase-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.eaphone.jiankang.demo.client</groupId>
-			<artifactId>demo-client</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.eaphone.jiankang.demo.client</groupId>
-			<artifactId>demo-client</artifactId>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
 
 	<build>
